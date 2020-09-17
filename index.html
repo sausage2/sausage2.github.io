@@ -43,7 +43,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="/img/1.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/"></a></h1>
@@ -101,7 +101,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="/img/1.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author"></h1>
@@ -152,19 +152,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-我的第一篇博客文章" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-经典排序算法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/17/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">我的第一篇博客文章</a>
+      <a class="article-title" href="/2020/09/17/%E7%BB%8F%E5%85%B8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">经典排序算法</a>
     </h1>
   
 
         
-        <a href="/2020/09/17/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/" class="archive-article-date">
+        <a href="/2020/09/17/%E7%BB%8F%E5%85%B8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" class="archive-article-date">
   	<time datetime="2020-09-17T08:08:53.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-17</time>
 </a>
         
@@ -172,13 +172,66 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##第一章</p>
-<p>内容</p>
+        <p>1.归并排序</p>
+<p>和选择排序一样，归并排序的性能不受输入数据的影响，但表现比选择排序好的多，因为始终都是O(n log n）的时间复杂度。代价是需要额外的内存空间。</p>
+<pre><code>归并排序 是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。归并排序是一种稳定的排序方法。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并。</code></pre>
+<p>步骤1：把长度为n的输入序列分成两个长度为n/2的子序列；<br>步骤2：对这两个子序列分别采用归并排序；<br>步骤3：将两个排序好的子序列合并成一个最终的排序序列。</p>
+<p>内容<br>/**<br>     * 归并排序<br>     *<br>     * @param array<br>     * @return<br>     */<br>    public static int[] MergeSort(int[] array) {<br>        if (array.length &lt; 2) return array;<br>        int mid = array.length / 2;<br>        int[] left = Arrays.copyOfRange(array, 0, mid);<br>        int[] right = Arrays.copyOfRange(array, mid, array.length);<br>        return merge(MergeSort(left), MergeSort(right));<br>    }<br>    /**<br>     * 归并排序——将两段排序好的数组结合成一个排序数组<br>     *<br>     * @param left<br>     * @param right<br>     * @return<br>     */<br>    public static int[] merge(int[] left, int[] right) {<br>        int[] result = new int[left.length + right.length];<br>        for (int index = 0, i = 0, j = 0; index &lt; result.length; index++) {<br>            if (i &gt;= left.length)<br>                result[index] = right[j++];<br>            else if (j &gt;= right.length)<br>                result[index] = left[i++];<br>            else if (left[i] &gt; right[j])<br>                result[index] = right[j++];<br>            else<br>                result[index] = left[i++];<br>        }<br>        return result;<br>    }</p>
 <hr>
-<p>##第二章</p>
+<p>2.快速排序</p>
+<p> 快速排序 的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，则可分别对这两部分记录继续进行排序，以达到整个序列有序。<br>快速排序使用分治法来把一个串（list）分为两个子串（sub-lists）。具体算法描述如下：<br>步骤1：从数列中挑出一个元素，称为 “基准”（pivot ）；<br>步骤2：重新排序数列，所有元素比基准值小的摆放在基准前面，所有元素比基准值大的摆在基准的后面（相同的数可以到任一边）。在这个分区退出之后，该基准就处于数列的中间位置。这个称为分区（partition）操作；<br>步骤3：递归地（recursive）把小于基准值元素的子数列和大于基准值元素的子数列排序。</p>
 <p>内容</p>
+<p>package com.test.sort;</p>
+<p>public class quick_sort {</p>
+<pre><code>    public static void main(String[] args) &#123;
+        int[] arr = &#123; 49, 38, 65, 97, 23, 22, 76, 1, 5, 8, 2, 0, -1, 22 &#125;;
+        quickSort(arr, 0, arr.length - 1);
+        System.out.println(&quot;排序后:&quot;);
+        for (int i : arr) &#123;
+            System.out.println(i);
+        &#125;
+    &#125;
+
+    private static void quickSort(int[] arr, int low, int high) &#123;
+
+        if (low &lt; high) &#123;
+            // 找寻基准数据的正确索引
+            int index = getIndex(arr, low, high);
+
+            // 进行迭代对index之前和之后的数组进行相同的操作使整个数组变成有序
+            //quickSort(arr, 0, index - 1); 之前的版本，这种姿势有很大的性能问题，谢谢大家的建议
+            quickSort(arr, low, index - 1);
+            quickSort(arr, index + 1, high);
+        &#125;
+
+    &#125;
+
+    private static int getIndex(int[] arr, int low, int high) &#123;
+        // 基准数据
+        int tmp = arr[low];
+        while (low &lt; high) &#123;
+            // 当队尾的元素大于等于基准数据时,向前挪动high指针
+            while (low &lt; high &amp;&amp; arr[high] &gt;= tmp) &#123;
+                high--;
+            &#125;
+            // 如果队尾元素小于tmp了,需要将其赋值给low
+            arr[low] = arr[high];
+            // 当队首元素小于等于tmp时,向前挪动low指针
+            while (low &lt; high &amp;&amp; arr[low] &lt;= tmp) &#123;
+                low++;
+            &#125;
+            // 当队首元素大于tmp时,需要将其赋值给high
+            arr[high] = arr[low];
+
+        &#125;
+        // 跳出循环时low和high相等,此时的low或high就是tmp的正确索引位置
+        // 由原理部分可以很清楚的知道low位置的值并不是tmp,所以需要将tmp赋值给arr[low]
+        arr[low] = tmp;
+        return low; // 返回tmp的正确位置
+    &#125;</code></pre>
+<p>}</p>
 <hr>
-<p>##参考文献</p>
+<p>##<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41190227/article/details/86600821">https://blog.csdn.net/weixin_41190227/article/details/86600821</a></p>
 
       
 
@@ -187,86 +240,26 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">排序算法</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">java</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/17/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/09/17/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2020/09/17/hello-world/" class="archive-article-date">
-  	<time datetime="2020-09-17T08:02:52.934Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-09-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/09/17/hello-world/">展开全文 >></a>
+          <a class="article-more-a" href="/2020/09/17/%E7%BB%8F%E5%85%B8%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/">展开全文 >></a>
         </p>
       
 
@@ -387,6 +380,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">排序算法</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">java</a>
+              </li>
             
             <div class="clearfix"></div>
           </ul>
